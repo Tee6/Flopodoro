@@ -19,7 +19,7 @@ import TimerCard from './components/TimerCard.vue'
 @import url('./assets/main.css');
 
 .btn-div {
-  width: 50%;
+  width: 73vw;
   display: flex;
   justify-content: space-between;
   margin-top: 40px;

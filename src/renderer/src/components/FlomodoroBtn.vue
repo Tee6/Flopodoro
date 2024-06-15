@@ -1,6 +1,6 @@
 <template>
-  <button class="pomorodo-button" @click="useMainStore().startFlomodoro()">
-    <p class="start-pomodoro">Start Flomodoro</p>
+  <button class="timer-button" @click="useMainStore().startFlomodoro()">
+    <p class="start-text">Start Flomodoro</p>
   </button>
 </template>
 
@@ -9,20 +9,50 @@ import { useMainStore } from '../stores/mainStore'
 </script>
 
 <style>
-.pomorodo-button {
+.timer-button {
   background-color: rgba(32, 38, 85, 1);
-  border-radius: 11px;
-  padding: 2% 5%;
+  border-radius: 1.5vw;
+  padding: 2vw 4vw;
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  width: auto;
+  height: auto;
+  transition:
+    background-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+  cursor: pointer;
+  border: none;
+
+  &:hover {
+    background-color: #1d2063; /* Dunklere Nuance, die zur normalen Hintergrundfarbe passt */
+  }
+
+  &:active {
+    background-color: #1d2063; /* Noch etwas dunkler für den Klick-Effekt */
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+  }
 }
-.start-pomodoro {
-  font-size: 20px;
+
+.start-text {
+  font-size: 2vw;
   font-weight: 400;
   line-height: normal;
   color: white;
-  flex: 1;
-  align-self: stretch;
   text-align: center;
+  margin: 0;
+}
+
+@media (max-width: 600px) {
+  .timer-button {
+    padding: 4vw 8vw;
+  }
+
+  .start-text {
+    font-size: 4vw;
+  }
 }
 </style>

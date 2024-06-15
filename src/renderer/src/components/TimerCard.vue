@@ -1,123 +1,92 @@
 <template>
   <div class="card">
     <div class="relative-wrapper-two">
-      <p v-if="useMainStore().Time[0] > 9" class="num-00">{{ useMainStore().Time[0] }}</p>
-      <p v-if="useMainStore().Time[0] <= 9" class="num-00">0{{ useMainStore().Time[0] }}</p>
-      <p class="hours">hours</p>
+      <p class="num-00">{{ formatNumber(useMainStore().Time[0]) }}</p>
+      <p class="time-desc">Hours</p>
     </div>
     <div class="relative-wrapper-two">
-      <p v-if="useMainStore().Time[1] > 9" class="num-00">{{ useMainStore().Time[1] }}</p>
-      <p v-if="useMainStore().Time[1] <= 9" class="num-00">0{{ useMainStore().Time[1] }}</p>
-      <p class="minutes">Minutes</p>
+      <p class="num-00">{{ formatNumber(useMainStore().Time[1]) }}</p>
+      <p class="time-desc">Minutes</p>
     </div>
     <div class="relative-wrapper-two">
-      <p v-if="useMainStore().Time[2] > 9" class="num-00">{{ useMainStore().Time[2] }}</p>
-      <p v-if="useMainStore().Time[2] <= 9" class="num-00">0{{ useMainStore().Time[2] }}</p>
-      <p class="seconds">Seconds</p>
+      <p class="num-00">{{ formatNumber(useMainStore().Time[2]) }}</p>
+      <p class="time-desc">Seconds</p>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useMainStore } from '../stores/mainStore'
+
+function formatNumber(number: number): string {
+  return number <= 9 ? '0' + number : number.toString()
+}
 </script>
 
 <style scoped>
 .card {
   background: linear-gradient(105deg, rgba(255, 255, 255, 0.5) 0%, rgba(255, 255, 255, 0.2) 100%);
-  border-radius: 40px;
-  padding: 60px 78px 43px;
-  box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.25);
+  border-radius: 3vw;
+  padding: 3vw;
+  box-shadow: 0 2vw 4vw 0 rgba(0, 0, 0, 0.25);
   display: flex;
   align-items: flex-start;
-  backdrop-filter: blur(25px);
-  min-width: 845px;
-  min-height: 300px;
+  backdrop-filter: blur(2.5vw);
+  width: 80vw;
+  height: auto;
+  margin: auto;
+  justify-content: space-between;
+  box-sizing: border-box;
 }
 
 .relative-wrapper-two {
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  width: 28.57%;
-  align-self: stretch;
-  position: relative;
-}
-
-.relative-wrapper-two:not(:last-of-type) {
-  margin-right: 56px;
+  align-items: center;
+  width: 25vw;
 }
 
 .num-00 {
-  height: 100%;
-  width: 100%;
   color: rgba(12, 4, 58, 1);
   display: flex;
-  text-align: center;
-  position: relative;
-  font-family: 'Roboto', sans-serif;
-  font-size: 170px;
-  font-weight: 400;
+  justify-content: center;
+  align-items: center;
+  font-family: sans-serif;
+  font-size: 10vw;
   line-height: normal;
+  margin: 0;
 }
 
-.hours {
-  width: 30.63%;
-  height: 17.9%;
+.time-desc {
   color: rgba(12, 4, 58, 1);
   text-align: center;
-  position: absolute;
-  top: -17px;
   font-family: 'Roboto', sans-serif;
-  font-size: 24px;
+  font-size: 2.5vw;
   font-weight: 400;
   line-height: normal;
+  margin-top: 0.5vw;
 }
 
-.relative-wrapper-one {
-  width: 28.57%;
-  margin-right: 44px;
-  align-self: stretch;
-  position: relative;
-}
+@media (max-width: 600px) {
+  .card {
+    flex-direction: column;
+    align-items: center;
+    padding: 5vw 3vw;
+    width: 90vw;
+  }
 
-.line-1 {
-  width: 68.02%;
-  position: absolute;
-  left: -45px;
-  top: 6px;
-}
+  .relative-wrapper-two {
+    width: 80vw;
+    margin-bottom: 5vw;
+  }
 
-.minutes {
-  width: 40.99%;
-  height: 17.9%;
-  color: rgba(12, 4, 58, 1);
-  text-align: center;
-  position: absolute;
-  top: -17px;
-  font-family: 'Roboto', sans-serif;
-  font-size: 24px;
-  font-weight: 400;
-  line-height: normal;
-}
+  .num-00 {
+    font-size: 15vw;
+  }
 
-.line-2 {
-  width: 0.13%;
-  height: 93.21%;
-  background-color: rgba(0, 0, 0, 1);
-  margin-top: 6px;
-  margin-right: 10px;
-}
-
-.seconds {
-  width: 44.59%;
-  height: 17.9%;
-  color: rgba(12, 4, 58, 1);
-  text-align: center;
-  position: absolute;
-  top: -14px;
-  font-family: 'Roboto', sans-serif;
-  font-size: 24px;
-  font-weight: 400;
-  line-height: normal;
+  .time-desc {
+    font-size: 4vw;
+  }
 }
 </style>

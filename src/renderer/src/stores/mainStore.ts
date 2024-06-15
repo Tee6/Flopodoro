@@ -39,7 +39,7 @@ export const useMainStore = defineStore('main', {
             }
           }
         }
-      }, 10)
+      }, 1000)
     },
 
     ResetTimer() {
