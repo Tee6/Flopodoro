@@ -3,13 +3,13 @@ import FlomodoroButton from './components/FlomodoroBtn.vue'
 import PomodoroButton from './components/PomodoroBtn.vue'
 import ResetButton from './components/ResetBtn.vue'
 import TimerCard from './components/TimerCard.vue'
+import CustomMenuBar from './components/MenuBar.vue'
+import { useMainStore } from './stores/mainStore'
 </script>
 
 <template>
-  <div class="custom-menu-bar">
-    Flopodoro
-    <button>close</button>
-  </div>
+  <customMenuBar></customMenuBar>
+  <h1 class="big-main-title">{{ useMainStore().title }}</h1>
   <TimerCard></TimerCard>
   <div class="btn-div">
     <FlomodoroButton></FlomodoroButton>
@@ -22,7 +22,33 @@ import TimerCard from './components/TimerCard.vue'
 @import url('./assets/base.css');
 @import url('./assets/main.css');
 
+.big-main-title {
+  font-size: 3vw;
+  text-align: center;
+  letter-spacing: 3px;
+
+  position: relative;
+  top: -80px;
+}
+
+.menu-btn-div {
+  -webkit-app-region: no-drag;
+  float: left;
+}
+
+#minimize #close {
+  background-color: #1d2063;
+  color: black;
+  border: none;
+  width: 50px;
+  height: 50px;
+  font-size: 40px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
 .custom-menu-bar {
+  user-select: none;
   -webkit-app-region: drag;
   background-color: #1d2063;
   width: 100%;

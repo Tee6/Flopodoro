@@ -1,6 +1,7 @@
 <template>
-  <button class="timer-button" @click="useMainStore().startPomodoro()">
-    <p class="start-text">Start Pomodoro</p>
+  <button class="timer-button" @click="useMainStore().TogglePomodoro()">
+    <p v-if="!useMainStore().isPomodoroActive" class="start-text">Start Pomodoro</p>
+    <p v-if="useMainStore().isPomodoroActive" class="start-text">Stop Pomodoro</p>
   </button>
 </template>
 
