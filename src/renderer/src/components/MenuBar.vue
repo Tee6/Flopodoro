@@ -32,7 +32,7 @@ function maximizeWindow() {
 
 <style scoped>
 .left-helper-div {
-  width: 84px;
+  width: 180px;
 }
 
 .menu-bar {
@@ -59,7 +59,7 @@ function maximizeWindow() {
 .buttons {
   display: flex;
   -webkit-app-region: no-drag; /* Keine Drag-Region für die Buttons */
-  min-width: 84px;
+  min-width: 180px;
 }
 
 .menu-button {

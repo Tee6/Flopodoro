@@ -5,13 +5,27 @@ import ResetButton from './components/ResetBtn.vue'
 import TimerCard from './components/TimerCard.vue'
 import CustomMenuBar from './components/MenuBar.vue'
 import { useMainStore } from './stores/mainStore'
+import { ref } from 'vue'
+
+const btnDivVisible = ref(true)
+const menuBarVisible = ref(true)
+const handleKeydown = (event: KeyboardEvent) => {
+  if (event.ctrlKey && event.key === 'h') {
+    btnDivVisible.value = !btnDivVisible.value
+  }
+  if (event.ctrlKey && event.key === 'g') {
+    menuBarVisible.value = !menuBarVisible.value
+  }
+}
+
+window.addEventListener('keydown', handleKeydown)
 </script>
 
 <template>
-  <customMenuBar></customMenuBar>
+  <customMenuBar :class="{ fadeanimation: !menuBarVisible }"></customMenuBar>
   <h1 :key="useMainStore().title" class="big-main-title">{{ useMainStore().title }}</h1>
   <TimerCard></TimerCard>
-  <div class="btn-div">
+  <div class="btn-div" :class="{ invisible: !btnDivVisible }">
     <FlomodoroButton></FlomodoroButton>
     <ResetButton></ResetButton>
     <PomodoroButton></PomodoroButton>
@@ -31,14 +45,18 @@ import { useMainStore } from './stores/mainStore'
   top: -80px;
   animation: title-exit-animation 2s ease-in 0s 1 normal forwards;
 }
-@keyframes title-exit-animation {
-	0% {
-		opacity: 1;
-	}
 
-	100% {
-		opacity: 0;
-	}
+.fadeanimation {
+  animation: title-exit-animation 2s ease-in 0s 1 normal forwards;
+}
+@keyframes title-exit-animation {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
 .menu-btn-div {
   -webkit-app-region: no-drag;
@@ -91,5 +109,9 @@ import { useMainStore } from './stores/mainStore'
   display: flex;
   justify-content: space-between;
   margin-top: 40px;
+}
+
+.invisible {
+  animation: title-exit-animation 2s ease-in 0s 1 normal forwards;
 }
 </style>
