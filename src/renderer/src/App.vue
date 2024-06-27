@@ -9,7 +9,7 @@ import { useMainStore } from './stores/mainStore'
 
 <template>
   <customMenuBar></customMenuBar>
-  <h1 class="big-main-title">{{ useMainStore().title }}</h1>
+  <h1 :key="useMainStore().title" class="big-main-title">{{ useMainStore().title }}</h1>
   <TimerCard></TimerCard>
   <div class="btn-div">
     <FlomodoroButton></FlomodoroButton>
@@ -29,8 +29,17 @@ import { useMainStore } from './stores/mainStore'
 
   position: relative;
   top: -80px;
+  animation: title-exit-animation 2s ease-in 0s 1 normal forwards;
 }
+@keyframes title-exit-animation {
+	0% {
+		opacity: 1;
+	}
 
+	100% {
+		opacity: 0;
+	}
+}
 .menu-btn-div {
   -webkit-app-region: no-drag;
   float: left;
