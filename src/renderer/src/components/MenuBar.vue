@@ -3,9 +3,15 @@
     <div class="left-helper-div"></div>
     <div class="title">flopodoro</div>
     <div class="buttons">
-      <button class="menu-button" @click="minimizeWindow">_</button>
-      <button class="menu-button" @click="maximizeWindow">[]</button>
-      <button class="menu-button" @click="closeWindow">X</button>
+      <button class="menu-button" @click="minimizeWindow">
+        <img src="../assets/minimize-sign.png" style="width: 20px; padding-top: 15px" />
+      </button>
+      <button class="menu-button" @click="maximizeWindow">
+        <img src="../assets/expand-window.png" style="width: 20px" />
+      </button>
+      <button class="menu-button" @click="closeWindow">
+        <img src="../assets/x.png" style="width: 20px" />
+      </button>
     </div>
   </div>
 </template>
@@ -13,6 +19,14 @@
 <script setup lang="ts">
 function closeWindow() {
   window.close()
+}
+
+function minimizeWindow() {
+  window.api.minimizeWindow()
+}
+
+function maximizeWindow() {
+  window.api.maximizeWindow()
 }
 </script>
 
@@ -28,7 +42,6 @@ function closeWindow() {
   width: 100%; /* Menüleiste nimmt die gesamte Breite ein */
   background-color: #1d2063; /* Hintergrundfarbe */
   color: #fff;
-  padding: 10px;
   box-sizing: border-box; /* Um Padding in der Breite zu berücksichtigen */
   -webkit-app-region: drag; /* Drag-Region für das Verschieben des Fensters */
   position: absolute;
@@ -56,6 +69,7 @@ function closeWindow() {
   padding: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  width: 60px;
 }
 
 .menu-button:hover {

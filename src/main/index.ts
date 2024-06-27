@@ -22,6 +22,14 @@ function createWindow(): void {
     mainWindow.show()
   })
 
+  ipcMain.on('minimize', () => {
+    mainWindow.minimize()
+  })
+
+  ipcMain.on('maximize', () => {
+    mainWindow.kiosk = !mainWindow.kiosk
+  })
+
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
     return { action: 'deny' }

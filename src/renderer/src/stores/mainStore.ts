@@ -2,7 +2,12 @@ import { defineStore } from 'pinia'
 export const useMainStore = defineStore('main', {
   state: () => ({
     title: 'Flopodoro',
+
+    // Default Settings
     Time: [0, 0, 0],
+    PomodoroTime: [0, 25, 0],
+    PomodoroPauseTime: [0, 5, 0],
+
     Flopodoro: null,
     Pomodoro: null,
     PauseTimer: null,
@@ -53,7 +58,7 @@ export const useMainStore = defineStore('main', {
         this.isPomodoroActive = true
       }
       if (this.Time[0] === 0 && this.Time[1] === 0 && this.Time[2] === 0) {
-        this.Time = [0, 2, 0]
+        this.Time = this.PomodoroTime
       }
       this.Pomodoro = setInterval(() => {
         if (this.Time[2] > 0) {
@@ -97,7 +102,7 @@ export const useMainStore = defineStore('main', {
     },
     PomodoroPause() {
       this.pause = true
-      this.Time = [0, 5, 0]
+      this.Time = this.PomodoroPauseTime
 
       this.PauseTimer = setInterval(() => {
         if (this.Time[2] > 0) {
