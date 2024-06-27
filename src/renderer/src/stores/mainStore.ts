@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 export const useMainStore = defineStore('main', {
   state: () => ({
-    title: 'Flopodoro Timer',
+    title: 'Flopodoro',
     Time: [0, 0, 0],
     Flopodoro: null,
     Pomodoro: null,
@@ -13,7 +13,7 @@ export const useMainStore = defineStore('main', {
   }),
   actions: {
     ToggleFlomodoro() {
-      this.title = 'Flopodoro Timer'
+      this.title = 'Flopodoro Study Time!'
       if (this.isPomodoroActive) {
         alert("You can't start Flopodoro while a Pomodoro is active!")
         return
@@ -40,18 +40,10 @@ export const useMainStore = defineStore('main', {
       }, 1000)
     },
     TogglePomodoro() {
-      this.title = 'Pomodoro Timer'
+      this.title = 'Pomodoro Study Time!'
       if (this.isFlopodoroActive) {
         alert("You can't start Pomodoro while a Flopodoro is active!")
-        if (this.Time[0] !== 0 || this.Time[1] !== 0 || this.Time[2] !== 0) {
-          const result = confirm('Would you like to convert your Flopodoro time to Pomodoro time?')
-          if (result == true) {
-            this.Time = [this.Time[0], this.Time[1], this.Time[2]]
-            this.ToggleFlomodoro()
-          } else {
-            this.Time = [0, 0, 0]
-          }
-        }
+        return
       }
       if (this.isPomodoroActive) {
         clearInterval(this.Pomodoro)
@@ -87,6 +79,11 @@ export const useMainStore = defineStore('main', {
     },
 
     ResetTimer() {
+      const resetConfirm = confirm('Are you sure you want to reset the timer?')
+      if (!resetConfirm) {
+        return
+      }
+      this.title = 'Flopodoro'
       this.disableTimers()
       clearInterval(this.Flopodoro)
       clearInterval(this.Pomodoro)
@@ -125,31 +122,18 @@ export const useMainStore = defineStore('main', {
     },
     FlopodoroPause() {
       this.title = 'Pause'
-      const timePassed = this.Time[0] * 3600 + this.Time[1] * 60 + this.Time[2]
-      const pauseTime = Math.floor(timePassed / this.pauseDivider)
-      this.Time = [
-        Math.floor(pauseTime / 3600),
-        Math.floor((pauseTime % 3600) / 60),
-        pauseTime % 60
-      ]
-      const timeUnits = ['hour', 'minute', 'second']
-      const timeValues = this.Time
 
-      const timeStrings = timeValues
-        .map((value, index) => {
-          return value > 0 ? `${value} ${timeUnits[index]}` : ''
-        })
-        .filter(Boolean)
-
-      const timeMessage = timeStrings.join(' and ')
-
+      const TimerObject = this.getTimerMessage(this.Time)
+      const timeMessage = TimerObject.message
+      const timeArray = TimerObject.timeArray
       const checkPause = confirm(`Would you like to start your ${timeMessage} break?`)
 
       if (!checkPause) {
         this.Time = [0, 0, 0]
+        this.disableTimers()
         return
       }
-
+      this.Time = timeArray
       this.pause = true
       this.PauseTimer = setInterval(() => {
         if (this.Time[2] > 0) {
@@ -171,6 +155,30 @@ export const useMainStore = defineStore('main', {
           }
         }
       }, 1000)
+    },
+    getTimerMessage(timeArray) {
+      console.log(timeArray)
+      const timePassed = timeArray[0] * 3600 + timeArray[1] * 60 + timeArray[2]
+      const pauseTime = Math.floor(timePassed / this.pauseDivider)
+      const newTimeArray = [
+        Math.floor(pauseTime / 3600),
+        Math.floor((pauseTime % 3600) / 60),
+        pauseTime % 60
+      ]
+      const timeUnits = ['hour', 'minute', 'second']
+
+      const timeStrings = newTimeArray
+        .map((value, index) => {
+          return value > 0 ? `${value} ${timeUnits[index]}` : ''
+        })
+        .filter(Boolean)
+
+      const message = timeStrings.join(' and ')
+
+      return {
+        message,
+        timeArray: newTimeArray
+      }
     }
   }
 })
