@@ -9,12 +9,26 @@ import { ref } from 'vue'
 
 const btnDivVisible = ref(true)
 const menuBarVisible = ref(true)
+let hCounter = 0
 const handleKeydown = (event: KeyboardEvent) => {
   if (event.ctrlKey && event.key === 'h') {
-    btnDivVisible.value = !btnDivVisible.value
-  }
-  if (event.ctrlKey && event.key === 'g') {
-    menuBarVisible.value = !menuBarVisible.value
+    if (hCounter === 0) {
+      btnDivVisible.value = false
+      menuBarVisible.value = true
+    }
+    if (hCounter === 1) {
+      btnDivVisible.value = false
+      menuBarVisible.value = false
+    }
+    if (hCounter === 2) {
+      btnDivVisible.value = true
+      menuBarVisible.value = true
+    }
+    if (hCounter + 1 >= 3) {
+      hCounter = 0
+    } else {
+      hCounter++
+    }
   }
 }
 
