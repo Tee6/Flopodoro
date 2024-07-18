@@ -2,8 +2,8 @@
   <div v-if="props.showPopup" class="popup">
     <div class="content">
       <div v-if="props.status === 'notAllowed'" class="message not-allowed">
-        <h2>Nicht 2 Vorgänge gleichzeitig!</h2>
-        <p>Bitte warten Sie, bis der aktuelle Vorgang abgeschlossen ist.</p>
+        <h2>Running Process!</h2>
+        <p>Please stop the running Timer before starting another one</p>
       </div>
       <div v-else-if="props.status === 'takeBreak'" class="message take-break">
         <h2>Take a Break!</h2>
@@ -68,66 +68,56 @@ const closePopup = () => {
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: white;
-  padding: 40px;
-  border-radius: 12px;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  padding: 5vh;
+  border-radius: 1.5vw;
+  box-shadow: 0 1.5vh 2.5vh rgba(0, 0, 0, 0.1);
   z-index: 1000;
-  width: 90%;
-  max-width: 600px;
+  width: 90vw;
+  max-width: 80vw;
   text-align: center;
   font-size: 1.5em;
-  border: 1px solid #e0e0e0;
+  border: 0.2vw solid #e0e0e0;
 }
 
 .content {
-  margin-bottom: 30px;
+  margin-bottom: 1vh;
 }
 
 .message {
-  padding: 30px;
-  border-radius: 12px;
-}
-
-.not-allowed {
-  background-color: #ffebee;
-  color: #c62828;
-}
-
-.take-break {
-  background-color: #e3f2fd;
-  color: #1565c0;
+  padding: 4vh;
+  border-radius: 1.5vw;
 }
 
 h2 {
-  font-size: 32px;
-  margin-bottom: 20px;
+  font-size: 4vh;
+  margin-bottom: 2.5vh;
   color: #333;
 }
 
 p {
-  font-size: 24px;
+  font-size: 3vh;
   line-height: 1.8;
   margin: 0;
   color: #555;
 }
 
 button {
-  font-size: 1em;
-  padding: 15px 30px;
-  margin: 10px;
-  border-radius: 8px;
+  font-size: 2vh;
+  padding: 2vh 3vw;
+  margin: 1.5vh;
+  border-radius: 1vw;
   cursor: pointer;
   border: none;
   transition: background-color 0.3s ease;
 }
 
 .confirm-button {
-  background-color: #4caf50;
+  background-color: #76c878;
   color: white;
 }
 
 .cancel-button {
-  background-color: #f44336;
+  background-color: #f45f55;
   color: white;
 }
 
@@ -142,12 +132,12 @@ button {
 .close-button {
   background-color: transparent;
   color: #2196f3;
-  font-size: 24px;
-  padding: 15px 30px;
-  border-radius: 8px;
+  font-size: 3vh;
+  padding: 2vh 3vw;
+  border-radius: 1vw;
   cursor: pointer;
   transition: background-color 0.3s ease;
-  border: 1px solid #2196f3;
+  border: 0.2vw solid #2196f3;
 }
 
 .close-button:hover {
@@ -156,27 +146,27 @@ button {
 
 @media (max-width: 480px) {
   .popup {
-    width: 95%;
-    max-width: 350px;
+    width: 95vw;
+    max-width: 70vw;
     font-size: 1.2em;
   }
 
   h2 {
-    font-size: 28px;
+    font-size: 3.5vh;
   }
 
   p {
-    font-size: 20px;
+    font-size: 2.5vh;
   }
 
   button {
-    font-size: 0.9em;
-    padding: 10px 20px;
+    font-size: 2vh;
+    padding: 1.5vh 2.5vw;
   }
 
   .close-button {
-    font-size: 20px;
-    padding: 10px 20px;
+    font-size: 2.5vh;
+    padding: 1.5vh 2.5vw;
   }
 }
 </style>
