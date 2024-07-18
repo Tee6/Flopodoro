@@ -16,7 +16,11 @@ export const useMainStore = defineStore('main', {
     pauseDivider: 2,
     pause: false,
     showSettingsPage: false,
-    selectedTheme: 0
+    selectedTheme: 0,
+    showPopup: false,
+    popupStatus: 'notAllowed',
+    PauseSentence: '',
+    pauseTimeArray: [0, 0, 0]
   }),
   actions: {
     getState() {
@@ -29,10 +33,10 @@ export const useMainStore = defineStore('main', {
     ToggleFlomodoro() {
       this.title = 'Flopodoro Study Time!'
       if (this.isPomodoroActive) {
-        alert("You can't start Flopodoro while a Pomodoro is active!")
+        this.showPopup = true
+        this.popupStatus = 'notAllowed'
         return
       }
-
       if (this.isFlopodoroActive) {
         clearInterval(this.Flopodoro)
         this.isFlopodoroActive = false
@@ -56,7 +60,8 @@ export const useMainStore = defineStore('main', {
     TogglePomodoro() {
       this.title = 'Pomodoro Study Time!'
       if (this.isFlopodoroActive || this.pause) {
-        alert("You can't start Pomodoro while a Flopodoro is active!")
+        this.showPopup = true
+        this.popupStatus = 'notAllowed'
         return
       }
       if (this.isPomodoroActive) {
@@ -84,25 +89,22 @@ export const useMainStore = defineStore('main', {
             } else {
               clearInterval(this.Pomodoro)
               this.disableTimers()
-              alert("Time's up! Take a 5 minute break!")
-              this.PomodoroPause()
+              this.popupStatus = 'takeBreak-p'
+              this.PauseSentence = `Would you like to start your ${this.PomodoroPauseTime[1]} Minute break?`
+              this.showPopup = true
             }
           }
         }
-      }, 1000)
+      }, 1)
     },
-
-    ResetTimer() {
-      const resetConfirm = confirm('Are you sure you want to reset the timer?')
-      if (!resetConfirm) {
-        return
-      }
+    resetHelper() {
       this.title = 'Flopodoro'
       this.disableTimers()
       clearInterval(this.Flopodoro)
       clearInterval(this.Pomodoro)
       clearInterval(this.PauseTimer)
       this.Time = [0, 0, 0]
+      this.showPopup = false
     },
     disableTimers() {
       this.isPomodoroActive = false
@@ -110,6 +112,7 @@ export const useMainStore = defineStore('main', {
       this.pause = false
     },
     PomodoroPause() {
+      this.showPopup = false
       this.pause = true
       this.Time = this.PomodoroPauseTime
 
@@ -128,26 +131,33 @@ export const useMainStore = defineStore('main', {
             } else {
               clearInterval(this.PauseTimer)
               this.disableTimers()
-              alert("Time's up! Continue Working!")
+              this.showTimesUpPopup()
             }
           }
         }
       }, 1000)
     },
+    ResetTimer() {
+      this.popupStatus = 'reset'
+      this.showPopup = true
+    },
     FlopodoroPause() {
       this.title = 'Pause'
-
+      this.popupStatus = 'takeBreak'
       const TimerObject = this.getTimerMessage(this.Time)
       const timeMessage = TimerObject.message
-      const timeArray = TimerObject.timeArray
-      const checkPause = confirm(`Would you like to start your ${timeMessage} break?`)
-
-      if (!checkPause) {
-        this.Time = [0, 0, 0]
-        this.disableTimers()
-        return
-      }
-      this.Time = timeArray
+      this.pauseTimeArray = TimerObject.timeArray
+      this.PauseSentence = `Would you like to start your ${timeMessage} break?`
+      this.showPopup = true
+    },
+    ifpausefalse() {
+      this.Time = [0, 0, 0]
+      this.disableTimers()
+      this.showPopup = false
+      return
+    },
+    ifpausetrue() {
+      this.Time = this.pauseTimeArray
       this.pause = true
       this.PauseTimer = setInterval(() => {
         if (this.Time[2] > 0) {
@@ -164,14 +174,14 @@ export const useMainStore = defineStore('main', {
             } else {
               clearInterval(this.PauseTimer)
               this.disableTimers()
-              alert("Time's up! Continue Working!")
+              this.showTimesUpPopup()
             }
           }
         }
       }, 1000)
+      this.showPopup = false
     },
     getTimerMessage(timeArray) {
-      console.log(timeArray)
       const timePassed = timeArray[0] * 3600 + timeArray[1] * 60 + timeArray[2]
       const pauseTime = Math.floor(timePassed / this.pauseDivider)
       const newTimeArray = [
@@ -193,6 +203,10 @@ export const useMainStore = defineStore('main', {
         message,
         timeArray: newTimeArray
       }
+    },
+    showTimesUpPopup() {
+      this.popupStatus = 'timesup'
+      this.showPopup = true
     }
   }
 })

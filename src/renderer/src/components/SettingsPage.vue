@@ -93,56 +93,73 @@ function handleOutsideClick(event) {
 
 .settings-card {
   background: #ffffff;
-  padding: 2rem;
-  border-radius: 1rem;
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
-  max-width: 40rem;
+  padding: 3rem;
+  /* Increase padding for larger appearance */
+  border-radius: 1.5rem;
+  /* Increase border radius */
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  /* Increase box shadow */
+  max-width: 50rem;
+  /* Increase maximum width */
   width: 90%;
   text-align: center;
-  font-size: 1.25rem;
-  /* Base font size for scalability */
+  font-size: 1.5rem;
+  /* Increase base font size */
 }
 
 .settings-card h1 {
-  margin-bottom: 1.5rem;
-  font-size: 2rem;
+  margin-bottom: 2rem;
+  /* Increase margin */
+  font-size: 2.5rem;
+  /* Increase heading font size */
   color: #333;
 }
 
 .settings-card-content {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
+  /* Increase margin */
 }
 
 .settings-card-content-row {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  /* Increase margin */
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: flex-start;
+  /* Align items to start */
 }
 
 .settings-card-content-row label {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
+  /* Increase margin */
   font-weight: bold;
   color: #555;
 }
 
 .settings-card-content-row select {
-  padding: 0.75rem;
-  border: 0.0625rem solid #ddd;
-  border-radius: 0.5rem;
+  padding: 1rem;
+  /* Increase padding */
+  border: 0.125rem solid #ddd;
+  /* Increase border thickness */
+  border-radius: 0.75rem;
+  /* Increase border radius */
   width: 100%;
-  font-size: 1rem;
+  font-size: 1.25rem;
+  /* Increase font size */
 }
 
 .save-button {
   background-color: #007bff;
   color: #fff;
   border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
+  padding: 1rem 2rem;
+  /* Increase padding */
+  border-radius: 0.75rem;
+  /* Increase border radius */
   cursor: pointer;
   transition: background-color 0.3s;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
+  /* Increase font size */
 }
 
 .save-button:hover {

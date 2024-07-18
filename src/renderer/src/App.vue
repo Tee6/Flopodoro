@@ -5,6 +5,7 @@ import ResetButton from './components/ResetBtn.vue'
 import TimerCard from './components/TimerCard.vue'
 import CustomMenuBar from './components/MenuBar.vue'
 import SettingsPage from './components/SettingsPage.vue'
+import PopUp from './components/PopUp.vue'
 import { useMainStore } from './stores/mainStore'
 import { onMounted, ref } from 'vue'
 
@@ -95,6 +96,10 @@ function applyTheme() {
   activeTheme.value = themes[MainStore.selectedTheme]
   document.body.style.backgroundColor = activeTheme.value.bgColor
 }
+
+function closePopup() {
+  MainStore.showPopup = false
+}
 </script>
 <template>
   <customMenuBar
@@ -126,6 +131,7 @@ function applyTheme() {
       :text-color="activeTheme.textColor"
     ></PomodoroButton>
   </div>
+  <PopUp :show-popup="MainStore.showPopup" :status="MainStore.popupStatus" @close="closePopup" />
 </template>
 
 <style scoped>

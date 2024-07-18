@@ -7,28 +7,41 @@ const api = {
   maximizeWindow: () => ipcRenderer.send('maximize')
 }
 
-contextBridge.exposeInMainWorld('api', api)
+// Function to safely expose properties in the main world
+const exposeAPI = (key, apiObject) => {
+  if (!window[key]) {
+    try {
+      contextBridge.exposeInMainWorld(key, apiObject)
+    } catch (error) {
+      console.error(`Failed to expose API '${key}':`, error)
+    }
+  } else {
+    console.error(`Cannot bind API. Property '${key}' already exists on the window object.`)
+  }
+}
 
 // Use `contextBridge` APIs to expose Electron APIs to
 // renderer only if context isolation is enabled, otherwise
 // just add to the DOM global.
 if (process.contextIsolated) {
-  try {
-    contextBridge.exposeInMainWorld('electron', electronAPI)
-    contextBridge.exposeInMainWorld('api', api)
-  } catch (error) {
-    console.error(error)
-  }
+  exposeAPI('electron', electronAPI)
+  exposeAPI('api', api)
+  exposeAPI('customElectronAPI', {
+    closeApp: () => {
+      console.log('closeApp function called')
+      ipcRenderer.send('close-app')
+    }
+  })
 } else {
   // @ts-ignore (define in dts)
   window.electron = electronAPI
   // @ts-ignore (define in dts)
   window.api = api
-}
-
-contextBridge.exposeInMainWorld('electron', {
-  closeApp: () => {
-    console.log('closeApp function called')
-    ipcRenderer.send('close-app')
+  // @ts-ignore (define in dts)
+  window.customElectronAPI = {
+    closeApp: () => {
+      console.log('closeApp function called')
+      ipcRenderer.send('close-app')
+    }
   }
-})
+}
