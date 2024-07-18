@@ -6,9 +6,9 @@ import TimerCard from './components/TimerCard.vue'
 import CustomMenuBar from './components/MenuBar.vue'
 import SettingsPage from './components/SettingsPage.vue'
 import { useMainStore } from './stores/mainStore'
-import { useColorStore } from './stores/colorStore'
 import { onMounted, ref } from 'vue'
 
+const MainStore = useMainStore()
 const themes = [
   {
     name: 'defaultTheme',
@@ -76,14 +76,14 @@ const handleKeydown = (event: KeyboardEvent) => {
 window.addEventListener('keydown', handleKeydown)
 
 onMounted(() => {
-  useMainStore().getState()
+  MainStore.getState()
 
   // Load theme from localStorage if available
   const savedSettings = JSON.parse(localStorage.getItem('pomodoroSettings'))
   if (savedSettings && themes[savedSettings.colorTheme]) {
     activeTheme.value = themes[savedSettings.colorTheme]
     document.body.style.backgroundColor = activeTheme.value.bgColor
-    useColorStore().selectedTheme = savedSettings.colorTheme
+    MainStore.selectedTheme = savedSettings.colorTheme
   }
 })
 
@@ -91,8 +91,8 @@ const activeTheme = ref(themes[0])
 document.body.style.backgroundColor = activeTheme.value.bgColor
 
 function applyTheme() {
-  console.log(useColorStore().selectedTheme)
-  activeTheme.value = themes[useColorStore().selectedTheme]
+  console.log(MainStore.selectedTheme)
+  activeTheme.value = themes[MainStore.selectedTheme]
   document.body.style.backgroundColor = activeTheme.value.bgColor
 }
 </script>
@@ -101,9 +101,9 @@ function applyTheme() {
     :bg-color="activeTheme.menuColor"
     :class="{ fadeanimation: !menuBarVisible }"
   ></customMenuBar>
-  <SettingsPage v-if="useMainStore().showSettingsPage" @settings-saved="applyTheme"></SettingsPage>
+  <SettingsPage v-if="MainStore.showSettingsPage" @settings-saved="applyTheme"></SettingsPage>
 
-  <h1 :key="useMainStore().title" class="big-main-title">{{ useMainStore().title }}</h1>
+  <h1 :key="MainStore.title" class="big-main-title">{{ MainStore.title }}</h1>
 
   <TimerCard
     :timer-color="activeTheme.timerColor"

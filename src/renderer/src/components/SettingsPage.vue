@@ -41,13 +41,11 @@
 <script setup>
 import { ref } from 'vue'
 import { useMainStore } from '../stores/mainStore'
-import { useColorStore } from '../stores/colorStore'
 
 const PomodoroWorkTime = ref(25)
 const PomodoroPauseTime = ref(5)
-const colorTheme = ref(useColorStore().selectedTheme)
 const store = useMainStore()
-const colorStore = useColorStore()
+const colorTheme = ref(store.selectedTheme)
 
 const emit = defineEmits(['settings-saved'])
 
@@ -63,7 +61,7 @@ function saveSettings() {
   // Update store values
   store.FlopodoroPause = [0, PomodoroPauseTime.value, 0]
   store.PomodoroTime = [0, PomodoroWorkTime.value, 0]
-  colorStore.selectedTheme = parseInt(colorTheme.value, 10)
+  store.selectedTheme = parseInt(colorTheme.value, 10)
 
   // Hide settings page
   store.showSettingsPage = false

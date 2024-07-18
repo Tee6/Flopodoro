@@ -15,7 +15,8 @@ export const useMainStore = defineStore('main', {
     isPomodoroActive: false,
     pauseDivider: 2,
     pause: false,
-    showSettingsPage: false
+    showSettingsPage: false,
+    selectedTheme: 0
   }),
   actions: {
     getState() {
