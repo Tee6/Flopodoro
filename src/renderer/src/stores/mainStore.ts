@@ -14,9 +14,17 @@ export const useMainStore = defineStore('main', {
     isFlopodoroActive: false,
     isPomodoroActive: false,
     pauseDivider: 2,
-    pause: false
+    pause: false,
+    showSettingsPage: false
   }),
   actions: {
+    getState() {
+      if (localStorage.getItem('pomodoroSettings')) {
+        const settings = JSON.parse(localStorage.getItem('pomodoroSettings'))
+        this.PomodoroTime = [0, settings.PomodoroWorkTime, 0]
+        this.PomodoroPauseTime = [0, settings.PomodoroPauseTime, 0]
+      }
+    },
     ToggleFlomodoro() {
       this.title = 'Flopodoro Study Time!'
       if (this.isPomodoroActive) {
@@ -46,7 +54,7 @@ export const useMainStore = defineStore('main', {
     },
     TogglePomodoro() {
       this.title = 'Pomodoro Study Time!'
-      if (this.isFlopodoroActive) {
+      if (this.isFlopodoroActive || this.pause) {
         alert("You can't start Pomodoro while a Flopodoro is active!")
         return
       }

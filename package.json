@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Pomodoro Timer",
   "main": "./out/main/index.js",
-  "author": "example.com",
+  "author": "Niko Leimegger",
   "homepage": "https://electron-vite.org",
   "scripts": {
     "format": "prettier --write .",
@@ -23,7 +23,8 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.0",
     "@electron-toolkit/utils": "^3.0.0",
-    "pinia": "^2.1.7"
+    "pinia": "^2.1.7",
+    "vue-router": "^4.4.0"
   },
   "devDependencies": {
     "@electron-toolkit/eslint-config": "^1.0.2",

@@ -1,15 +1,30 @@
 <template>
-  <div class="menu-bar">
+  <div id="menu-bar-id" class="menu-bar" :style="{ background: props.bgColor }">
     <div class="left-helper-div"></div>
     <div class="title">flopodoro</div>
     <div class="buttons">
-      <button class="menu-button" @click="minimizeWindow">
+      <button
+        class="menu-button"
+        :style="{ background: props.bgColor }"
+        @click="useMainStore().showSettingsPage = true"
+      >
+        <img src="../assets/settings.png" style="width: 25px; padding-top: 5px" />
+      </button>
+      <button
+        class="menu-button"
+        :style="{ backgroundColor: props.bgColor }"
+        @click="minimizeWindow"
+      >
         <img src="../assets/minimize-sign.png" style="width: 20px; padding-top: 15px" />
       </button>
-      <button class="menu-button" @click="maximizeWindow">
+      <button
+        class="menu-button"
+        :style="{ backgroundColor: props.bgColor }"
+        @click="maximizeWindow"
+      >
         <img src="../assets/expand-window.png" style="width: 20px" />
       </button>
-      <button class="menu-button" @click="closeWindow">
+      <button class="menu-button" :style="{ backgroundColor: props.bgColor }" @click="closeWindow">
         <img src="../assets/x.png" style="width: 20px" />
       </button>
     </div>
@@ -17,6 +32,8 @@
 </template>
 
 <script setup lang="ts">
+import { useMainStore } from '../stores/mainStore'
+
 function closeWindow() {
   window.close()
 }
@@ -28,22 +45,30 @@ function minimizeWindow() {
 function maximizeWindow() {
   window.api.maximizeWindow()
 }
+
+const props = defineProps<{
+  bgColor: string
+}>()
 </script>
 
 <style scoped>
 .left-helper-div {
-  width: 180px;
+  width: 240px;
 }
 
 .menu-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%; /* Menüleiste nimmt die gesamte Breite ein */
-  background-color: #1d2063; /* Hintergrundfarbe */
+  width: 100%;
+  /* Menüleiste nimmt die gesamte Breite ein */
+  background-color: #1d2063;
+  /* Hintergrundfarbe */
   color: #fff;
-  box-sizing: border-box; /* Um Padding in der Breite zu berücksichtigen */
-  -webkit-app-region: drag; /* Drag-Region für das Verschieben des Fensters */
+  box-sizing: border-box;
+  /* Um Padding in der Breite zu berücksichtigen */
+  -webkit-app-region: drag;
+  /* Drag-Region für das Verschieben des Fensters */
   position: absolute;
   top: 0;
   left: 0;
@@ -58,12 +83,14 @@ function maximizeWindow() {
 
 .buttons {
   display: flex;
-  -webkit-app-region: no-drag; /* Keine Drag-Region für die Buttons */
-  min-width: 180px;
+  -webkit-app-region: no-drag;
+  /* Keine Drag-Region für die Buttons */
+  min-width: 240px;
 }
 
 .menu-button {
-  background-color: #1d2063; /* Gleiche Hintergrundfarbe wie die Menüleiste */
+  background-color: #1d2063;
+  /* Gleiche Hintergrundfarbe wie die Menüleiste */
   color: #fff;
   border: none;
   padding: 10px;
@@ -73,10 +100,10 @@ function maximizeWindow() {
 }
 
 .menu-button:hover {
-  background-color: #ff6666;
+  background-color: #ff6666 !important;
 }
 
 .menu-button:focus {
-  outline: none;
+  outline: none !important;
 }
 </style>

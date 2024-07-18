@@ -1,16 +1,22 @@
 <template>
   <div class="card">
     <div class="relative-wrapper-two">
-      <p class="num-00">{{ formatNumber(useMainStore().Time[0]) }}</p>
-      <p class="time-desc">Hours</p>
+      <p class="num-00" :style="{ color: props.timerColor }">
+        {{ formatNumber(useMainStore().Time[0]) }}
+      </p>
+      <p class="time-desc" :style="{ color: props.timerTextColor }">Hours</p>
     </div>
     <div class="relative-wrapper-two">
-      <p class="num-00">{{ formatNumber(useMainStore().Time[1]) }}</p>
-      <p class="time-desc">Minutes</p>
+      <p class="num-00" :style="{ color: props.timerColor }">
+        {{ formatNumber(useMainStore().Time[1]) }}
+      </p>
+      <p class="time-desc" :style="{ color: props.timerTextColor }">Minutes</p>
     </div>
     <div class="relative-wrapper-two">
-      <p class="num-00">{{ formatNumber(useMainStore().Time[2]) }}</p>
-      <p class="time-desc">Seconds</p>
+      <p class="num-00" :style="{ color: props.timerColor }">
+        {{ formatNumber(useMainStore().Time[2]) }}
+      </p>
+      <p class="time-desc" :style="{ color: props.timerTextColor }">Seconds</p>
     </div>
   </div>
 </template>
@@ -21,6 +27,10 @@ import { useMainStore } from '../stores/mainStore'
 function formatNumber(number: number): string {
   return number <= 9 ? '0' + number : number.toString()
 }
+const props = defineProps<{
+  timerColor: string
+  timerTextColor: string
+}>()
 </script>
 
 <style scoped>

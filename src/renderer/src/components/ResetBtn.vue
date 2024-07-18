@@ -1,11 +1,20 @@
 <template>
-  <button class="reset-button" @click="useMainStore().ResetTimer()">
-    <p class="reset-pomodoro-text">Reset</p>
+  <button
+    class="reset-button"
+    :style="{ backgroundColor: props.bgColor }"
+    @click="useMainStore().ResetTimer()"
+  >
+    <p class="reset-pomodoro-text" :style="{ color: props.textColor }">Reset</p>
   </button>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useMainStore } from '../stores/mainStore'
+
+const props = defineProps<{
+  bgColor: string
+  textColor: string
+}>()
 </script>
 
 <style lang="scss" scoped>

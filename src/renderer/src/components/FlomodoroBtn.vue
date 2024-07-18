@@ -1,12 +1,33 @@
 <template>
-  <button class="timer-button" @click="useMainStore().ToggleFlomodoro()">
-    <p v-if="!useMainStore().isFlopodoroActive" class="start-text">Start Flomodoro</p>
-    <p v-if="useMainStore().isFlopodoroActive" class="start-text">Stop Flomodoro</p>
+  <button
+    class="timer-button"
+    :style="{ backgroundColor: props.bgColor }"
+    @click="useMainStore().ToggleFlomodoro()"
+  >
+    <p
+      v-if="!useMainStore().isFlopodoroActive"
+      class="start-text"
+      :style="{ color: props.textColor }"
+    >
+      Start Flomodoro
+    </p>
+    <p
+      v-if="useMainStore().isFlopodoroActive"
+      class="start-text"
+      :style="{ color: props.textColor }"
+    >
+      Stop Flomodoro
+    </p>
   </button>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import { useMainStore } from '../stores/mainStore'
+
+const props = defineProps<{
+  bgColor: string
+  textColor: string
+}>()
 </script>
 
 <style>
@@ -28,11 +49,13 @@ import { useMainStore } from '../stores/mainStore'
   border: none;
 
   &:hover {
-    background-color: #1d2063; /* Dunklere Nuance, die zur normalen Hintergrundfarbe passt */
+    background-color: #1d2063;
+    /* Dunklere Nuance, die zur normalen Hintergrundfarbe passt */
   }
 
   &:active {
-    background-color: #1d2063; /* Noch etwas dunkler für den Klick-Effekt */
+    background-color: #1d2063;
+    /* Noch etwas dunkler für den Klick-Effekt */
     box-shadow: 0 5px #666;
     transform: translateY(4px);
   }
