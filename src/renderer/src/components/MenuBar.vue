@@ -8,7 +8,7 @@
         :style="{ background: props.bgColor }"
         @click="useMainStore().showSettingsPage = true"
       >
-        <img src="../assets/settings.png" style="width: 25px; padding-top: 5px" />
+        <img src="../assets/settings.png" style="width: 25px" />
       </button>
       <button
         class="menu-button"
@@ -61,14 +61,12 @@ const props = defineProps<{
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  /* Menüleiste nimmt die gesamte Breite ein */
+  height: 50px;
+  /* Feste Höhe hinzugefügt */
   background-color: #1d2063;
-  /* Hintergrundfarbe */
   color: #fff;
   box-sizing: border-box;
-  /* Um Padding in der Breite zu berücksichtigen */
   -webkit-app-region: drag;
-  /* Drag-Region für das Verschieben des Fensters */
   position: absolute;
   top: 0;
   left: 0;
@@ -84,19 +82,23 @@ const props = defineProps<{
 .buttons {
   display: flex;
   -webkit-app-region: no-drag;
-  /* Keine Drag-Region für die Buttons */
   min-width: 240px;
+  height: 50px;
 }
 
 .menu-button {
   background-color: #1d2063;
-  /* Gleiche Hintergrundfarbe wie die Menüleiste */
   color: #fff;
   border: none;
   padding: 10px;
   cursor: pointer;
   transition: background-color 0.3s ease;
   width: 60px;
+}
+
+.menu-button img {
+  display: block;
+  margin: auto;
 }
 
 .menu-button:hover {

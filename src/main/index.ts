@@ -18,8 +18,8 @@ function createWindow(): void {
       nodeIntegration: true
     }
   })
-
   mainWindow.on('ready-to-show', () => {
+    mainWindow.webContents.setZoomFactor(0.63)
     mainWindow.show()
   })
 
@@ -43,6 +43,15 @@ function createWindow(): void {
   } else {
     mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
   }
+
+  mainWindow.webContents.on('before-input-event', (event, input) => {
+    if (
+      input.control &&
+      (input.key === '+' || input.key === '-' || (input.shift && input.key === '+'))
+    ) {
+      event.preventDefault()
+    }
+  })
 }
 
 // This method will be called when Electron has finished
