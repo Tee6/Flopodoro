@@ -51,7 +51,7 @@ const props = defineProps({
   status: {
     type: String,
     required: true,
-    validator: (value) => ['notAllowed', 'takeBreak'].includes(value)
+    validator: (value) => ['notAllowed', 'takeBreak', 'reset', 'timesup'].includes(value)
   }
 })
 const emit = defineEmits(['close'])
