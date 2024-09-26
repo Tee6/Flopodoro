@@ -95,7 +95,7 @@ export const useMainStore = defineStore('main', {
             }
           }
         }
-      }, 1)
+      }, 1000)
     },
     resetHelper() {
       this.title = 'Flopodoro'
