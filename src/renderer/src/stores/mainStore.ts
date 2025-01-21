@@ -20,7 +20,14 @@ export const useMainStore = defineStore('main', {
     showPopup: false,
     popupStatus: 'notAllowed',
     PauseSentence: '',
-    pauseTimeArray: [0, 0, 0]
+    pauseTimeArray: [0, 0, 0],
+
+    // Song Playing
+    TrackName: '',
+    ArtistName: '',
+    isUserLoggedIn: false,
+    isSongPlaying: false,
+    spinning: true,
   }),
   actions: {
     getState() {

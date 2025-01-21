@@ -34,6 +34,17 @@
         </div>
       </div>
       <button class="save-button" @click="saveSettings">Save</button>
+      <div>
+        <button 
+        class="spotify-button"
+  @click="$emit('login-with-spotify')" 
+  :disabled="MainStore.isUserLoggedIn"
+>
+  <!-- Display different text based on login status -->
+  <span v-if="MainStore.isUserLoggedIn">You're logged into Spotify</span>
+  <span v-else>Log in with Spotify</span>
+</button>
+  </div>
     </div>
   </div>
 </template>
@@ -41,13 +52,14 @@
 <script setup>
 import { ref } from 'vue'
 import { useMainStore } from '../stores/mainStore'
+const MainStore = useMainStore()
 
 const PomodoroWorkTime = ref(25)
 const PomodoroPauseTime = ref(5)
 const store = useMainStore()
 const colorTheme = ref(store.selectedTheme)
 
-const emit = defineEmits(['settings-saved'])
+const emit = defineEmits(['settings-saved', 'login-with-spotify'])
 
 function saveSettings() {
   // Save data to localStorage
@@ -78,6 +90,21 @@ function handleOutsideClick(event) {
 </script>
 
 <style scoped>
+.spotify-button{
+  background-color: #1CB950;
+  color: #ffffff;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 0.75rem;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 1.5rem;
+}
+
+.spotify-button:hover {
+  background-color: #169841;
+}
+
 .settings-container {
   position: fixed;
   top: 0;
