@@ -28,6 +28,8 @@ No more unnecessary interruptions—Flomodoro lets you stay in your flow state f
   
 - **Customizable Color Schemes**: Personalize your timer with multiple color options to match your aesthetic.
 
+- **Music Display**: Connect your Spotify account to have a nice display of your currently playing Song.
+
 ---
 
 With **Flopodoro**, you control your breaks, stay focused longer, and maximize your productivity without breaking your concentration.
