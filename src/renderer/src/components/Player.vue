@@ -3,7 +3,10 @@
     <div class="record" :style="{ backgroundImage: `url(${albumCover})`, animationPlayState: MainStore.spinning ? 'running' : 'paused' }">
       <div class="label"></div>
     </div>
-    <h1 class="track-name">{{ MainStore.TrackName }} - {{ MainStore.ArtistName }}</h1>
+    <div class="track-info" :style="{ color: props.textColor }">
+      <h1 class="track-name" :style="{ color: props.textColor }">{{ MainStore.TrackName }}</h1>
+      <h3 class="track-artist" :style="{ color: props.textColor }">{{ MainStore.ArtistName }}</h3>
+    </div>
   </div>
 </template>
 
@@ -12,24 +15,31 @@ import { useMainStore } from '../stores/mainStore';
 import { ref, onMounted, onBeforeUnmount } from 'vue';
 
 const MainStore = useMainStore();
-const props = defineProps({
-  albumCover: {
-    type: String,
-    required: true,
-    default: 'https://i.scdn.co/image/ab67616d00001e02ff9ca10b55ce82ae553c8228'
-  },
-});
+const props = defineProps<{
+  albumCover: string
+  textColor: string
+}>()
 </script>
 
 <style scoped>
+.track-info{
+  margin-left: 20px;
+}
+.track-artist{
+  color: rgba(12, 4, 58, 1);
+  text-align: left;
+  font-family: 'Roboto', sans-serif;
+  font-size: 1.5vw;
+  font-weight: 400;
+}
+
 .track-name {
   color: rgba(12, 4, 58, 1);
-  text-align: center;
+  text-align: left;
   font-family: 'Roboto', sans-serif;
   font-size: 2.5vw;
   font-weight: 400;
   line-height: normal;
-  margin-left: 10px;
 }
 
 .record-container {
@@ -49,7 +59,7 @@ const props = defineProps({
   background-position: center;
   border: 5px solid #333;
   animation: spin 3s linear infinite;
-  animation-play-state: running; /* Initialisierungszustand der Animation */
+  animation-play-state: running;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -29,6 +29,8 @@
             <option value="1">Green</option>
             <option value="2">Kiki Mode</option>
             <option value="3">Purple theme</option>
+            <option value="4">Blue theme</option>
+            <option value="5">White theme</option>
             <!-- Add more options as needed -->
           </select>
         </div>
@@ -37,11 +39,9 @@
       <div>
         <button 
         class="spotify-button"
-  @click="$emit('login-with-spotify')" 
-  :disabled="MainStore.isUserLoggedIn"
+  @click="$emit('login-with-spotify')"
 >
-  <!-- Display different text based on login status -->
-  <span v-if="MainStore.isUserLoggedIn">You're logged into Spotify</span>
+  <span v-if="MainStore.isUserLoggedIn">Log Out of Spotify</span>
   <span v-else>Log in with Spotify</span>
 </button>
   </div>
@@ -121,58 +121,43 @@ function handleOutsideClick(event) {
 .settings-card {
   background: #ffffff;
   padding: 3rem;
-  /* Increase padding for larger appearance */
   border-radius: 1.5rem;
-  /* Increase border radius */
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
-  /* Increase box shadow */
   max-width: 50rem;
-  /* Increase maximum width */
   width: 90%;
   text-align: center;
   font-size: 1.5rem;
-  /* Increase base font size */
 }
 
 .settings-card h1 {
   margin-bottom: 2rem;
-  /* Increase margin */
   font-size: 2.5rem;
-  /* Increase heading font size */
   color: #333;
 }
 
 .settings-card-content {
   margin-bottom: 2rem;
-  /* Increase margin */
 }
 
 .settings-card-content-row {
   margin-bottom: 1.5rem;
-  /* Increase margin */
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  /* Align items to start */
 }
 
 .settings-card-content-row label {
   margin-bottom: 1rem;
-  /* Increase margin */
   font-weight: bold;
   color: #555;
 }
 
 .settings-card-content-row select {
   padding: 1rem;
-  /* Increase padding */
   border: 0.125rem solid #ddd;
-  /* Increase border thickness */
   border-radius: 0.75rem;
-  /* Increase border radius */
   width: 100%;
   font-size: 1.25rem;
-  /* Increase font size */
 }
 
 .save-button {
@@ -180,13 +165,11 @@ function handleOutsideClick(event) {
   color: #fff;
   border: none;
   padding: 1rem 2rem;
-  /* Increase padding */
   border-radius: 0.75rem;
-  /* Increase border radius */
   cursor: pointer;
   transition: background-color 0.3s;
   font-size: 1.5rem;
-  /* Increase font size */
+  margin-bottom: 10px;
 }
 
 .save-button:hover {

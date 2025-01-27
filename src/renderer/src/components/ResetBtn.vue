@@ -17,7 +17,7 @@ const props = defineProps<{
 }>()
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
 .reset-button {
   background-color: rgba(32, 38, 85, 1);
   border-radius: 1.5vw;
@@ -36,11 +36,11 @@ const props = defineProps<{
   border: none;
 
   &:hover {
-    background-color: #1d2063; /* Dunklere Nuance, die zur normalen Hintergrundfarbe passt */
+    background-color: #1d2063;
   }
 
   &:active {
-    background-color: #1d2063; /* Noch etwas dunkler für den Klick-Effekt */
+    background-color: #1d2063;
     box-shadow: 0 5px #666;
     transform: translateY(4px);
   }

@@ -50,12 +50,10 @@ const props = defineProps<{
 
   &:hover {
     background-color: #1d2063;
-    /* Dunklere Nuance, die zur normalen Hintergrundfarbe passt */
   }
 
   &:active {
     background-color: #1d2063;
-    /* Noch etwas dunkler für den Klick-Effekt */
     box-shadow: 0 5px #666;
     transform: translateY(4px);
   }

@@ -47,6 +47,23 @@ const themes = [
     timerColor: 'rgb(157 78 221 / 60%)',
     timerTextColor: '#9d4edd',
     menuColor: '#3c096c'
+  },
+  {
+    name: 'blueTheme',
+    bgColor: '#cfe2f3',
+    accentColor: '#4d8eb6',
+    textColor: '#ffffff',
+    timerColor: 'rgba(77, 142, 182, 1)',
+    timerTextColor: 'rgba(12, 4, 58, 1)',
+    menuColor: '#4d8eb6'
+  },
+  {name: 'whiteTheme',
+    bgColor: '#ffffff',
+    accentColor: '#000000',
+    textColor: '#ffffff',
+    timerColor: 'rgba(12, 4, 58, 1)',
+    timerTextColor: 'rgba(12, 4, 58, 1)',
+    menuColor: '#000000'
   }
 ]
 
@@ -107,10 +124,18 @@ function closePopup() {
 const CLIENT_ID = '4570aec779ae4c7592bf16d5af30c3ad';
 const REDIRECT_URI = 'http://localhost:5173/callback';
 const SCOPES = 'user-read-currently-playing user-read-playback-state';
+let accessToken
 
 function loginToSpotify() {
-  const authUrl = `https://accounts.spotify.com/authorize?response_type=token&client_id=${encodeURIComponent(CLIENT_ID)}&scope=${encodeURIComponent(SCOPES)}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}`;
-  window.location.href = authUrl;
+  if (MainStore.isUserLoggedIn) {
+  MainStore.isUserLoggedIn = false;
+  accessToken = null;
+  alert('You have been logged out from Spotify.');
+}
+  else{
+    const authUrl = `https://accounts.spotify.com/authorize?response_type=token&client_id=${encodeURIComponent(CLIENT_ID)}&scope=${encodeURIComponent(SCOPES)}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&show_dialog=true`;
+    window.location.href = authUrl;
+  }
 }
 
 function getAccessTokenFromUrl() {
@@ -128,9 +153,9 @@ async function getCurrentPlayingTrack(accessToken: string) {
   }
   if (response.ok) {
     const data = await response.json();
-    MainStore.TrackName = data.item.name; // Name des aktuellen Tracks
-    MainStore.ArtistName = data.item.artists[0].name; // Name des Künstlers
-    return data.item.album.images[0].url; // URL des Album-Covers
+    MainStore.TrackName = data.item.name;
+    MainStore.ArtistName = data.item.artists[0].name;
+    return data.item.album.images[0].url;
   } else {
     throw new Error('Failed to fetch currently playing track. Ensure Spotify playback is active.');
   }
@@ -142,10 +167,9 @@ MainStore.isUserLoggedIn = false;
 MainStore.isSongPlaying = false;
 
 async function startSpotifyPolling() {
-  const accessToken = getAccessTokenFromUrl();
+  accessToken = getAccessTokenFromUrl();
 
   if (!accessToken) {
-    loginToSpotify();
     return;
   }
 
@@ -197,7 +221,11 @@ onUnmounted(() => {
     :bg-color="activeTheme.menuColor"
   ></customMenuBar>
 </transition>
-  <SettingsPage v-if="MainStore.showSettingsPage" @settings-saved="applyTheme" @login-with-spotify="loginToSpotify"></SettingsPage>
+  <SettingsPage 
+  v-if="MainStore.showSettingsPage" 
+  @settings-saved="applyTheme" 
+  @login-with-spotify="loginToSpotify"
+  ></SettingsPage>
 
   <TimerCard
     :timer-color="activeTheme.timerColor"
@@ -222,7 +250,7 @@ onUnmounted(() => {
   </div>
 </transition>
   <PopUp :show-popup="MainStore.showPopup" :status="MainStore.popupStatus" @close="closePopup" />
-  <Player v-if="MainStore.isUserLoggedIn && MainStore.isSongPlaying" :album-cover="albumCoverUrl"></Player>
+  <Player v-if="MainStore.isUserLoggedIn && MainStore.isSongPlaying" :album-cover="albumCoverUrl" :text-color="activeTheme.timerTextColor"></Player>
 </template>
 
 <style scoped>
@@ -231,9 +259,9 @@ onUnmounted(() => {
 
 /* Transition für das Ausblenden */
 .fade-enter-active, .fade-leave-active {
-  transition: opacity 1s ease-in-out; /* Dauer und Timing der Animation */
+  transition: opacity 1s ease-in-out;
 }
-.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+.fade-enter, .fade-leave-to {
   opacity: 0; /* Wenn das Element entfernt wird, wird es unsichtbar */
 }
 
@@ -243,7 +271,6 @@ onUnmounted(() => {
   --text-color: #000000;
   --menu-icon-color: #000000;
   --menu-icon-bg-color: #1d2063;
-  /* weitere Variablen */
 }
 
 .big-main-title {
