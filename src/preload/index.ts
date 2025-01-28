@@ -4,7 +4,8 @@ import { electronAPI } from '@electron-toolkit/preload'
 // Custom APIs for renderer
 const api = {
   minimizeWindow: () => ipcRenderer.send('minimize'),
-  maximizeWindow: () => ipcRenderer.send('maximize')
+  maximizeWindow: () => ipcRenderer.send('maximize'),
+  loginSpotify: () => ipcRenderer.send('login-spotify'),
 }
 
 // Function to safely expose properties in the main world

@@ -12,6 +12,7 @@
     "typecheck:web": "vue-tsc --noEmit -p tsconfig.web.json --composite false",
     "typecheck": "npm run typecheck:node && npm run typecheck:web",
     "start": "electron-vite preview",
+    "startex": "node server.ts",
     "dev": "electron-vite dev",
     "build": "npm run typecheck && electron-vite build",
     "prebuild": "electron-vite build",
@@ -26,6 +27,7 @@
   "dependencies": {
     "@electron-toolkit/preload": "^3.0.0",
     "@electron-toolkit/utils": "^3.0.0",
+    "express": "^4.21.2",
     "pinia": "^2.1.7",
     "vue-router": "^4.4.0"
   },
@@ -51,10 +53,16 @@
     "vue": "^3.4.15",
     "vue-tsc": "^1.8.27"
   },
-  "build": {
-    "appId": "flopodoro.id",
-    "mac": {
-      "category": "com.study.timer"
-    }
+"build": {
+  "appId": "com.yourapp.name",
+  "files": [
+    "dist/**/*",
+    "out/**/*",
+    "server.js"
+  ],
+  "win": {
+    "target": "nsis"
   }
+}
+
 }

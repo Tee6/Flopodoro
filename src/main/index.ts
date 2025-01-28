@@ -3,6 +3,10 @@ import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
 
+const CLIENT_ID = '4570aec779ae4c7592bf16d5af30c3ad';
+const REDIRECT_URI = 'http://localhost:5173/callback';
+const SCOPES = 'user-read-currently-playing user-read-playback-state';
+
 function createWindow(): void {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
@@ -31,17 +35,24 @@ function createWindow(): void {
     mainWindow.kiosk = !mainWindow.kiosk
   })
 
+  ipcMain.on('login-spotify', () => {
+    console.log('In the Backend')
+    const authUrl = `https://accounts.spotify.com/authorize?response_type=token&client_id=${encodeURIComponent(CLIENT_ID)}&scope=${encodeURIComponent(SCOPES)}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&show_dialog=true`;
+    mainWindow.loadURL(authUrl);
+  })
+
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)
     return { action: 'deny' }
   })
 
-  // HMR for renderer base on electron-vite cli.
-  // Load the remote URL for development or the local html file for production.
-  if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
-    mainWindow.loadURL(process.env['ELECTRON_RENDERER_URL'])
+  // Load the correct URL based on development or production
+  if (is.dev) {
+    // In development mode, load from Vite server
+    mainWindow.loadURL('http://localhost:5173')
   } else {
-    mainWindow.loadFile(join(__dirname, '../renderer/index.html'))
+    // In production mode, load from dist folder
+    mainWindow.loadFile(join(__dirname, 'out/renderer/index.html')); 
   }
 
   mainWindow.webContents.on('before-input-event', (event, input) => {
@@ -72,6 +83,7 @@ app.whenReady().then(() => {
   ipcMain.on('ping', () => console.log('pong'))
 
   createWindow()
+  
 
   app.on('activate', function () {
     // On macOS it's common to re-create a window in the app when the

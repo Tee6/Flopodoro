@@ -9,6 +9,13 @@ import PopUp from './components/PopUp.vue'
 import Player from './components/Player.vue'
 import { useMainStore } from './stores/mainStore'
 import { onMounted, onUnmounted, ref } from 'vue'
+import { ipcRenderer } from 'electron'
+
+declare global {
+  interface Window {
+    api: any;
+  }
+}
 
 const MainStore = useMainStore()
 const themes = [
@@ -133,8 +140,7 @@ function loginToSpotify() {
   alert('You have been logged out from Spotify.');
 }
   else{
-    const authUrl = `https://accounts.spotify.com/authorize?response_type=token&client_id=${encodeURIComponent(CLIENT_ID)}&scope=${encodeURIComponent(SCOPES)}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&show_dialog=true`;
-    window.location.href = authUrl;
+    window.api.loginSpotify()
   }
 }
 
