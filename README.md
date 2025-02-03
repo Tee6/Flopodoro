@@ -38,4 +38,4 @@ With **Flopodoro**, you control your breaks, stay focused longer, and maximize y
 
 ## Installation
 
-Download the "flopodoro Setup 1.0.0.exe" File in the Release Tab on the right of this Github Page and install the App.
+Download the newest ".exe" File in the Release Tab on the right of this Github Page and install the App.
