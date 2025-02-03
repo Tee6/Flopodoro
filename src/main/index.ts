@@ -10,26 +10,22 @@ const SCOPES = 'user-read-currently-playing user-read-playback-state'
 const express = require('express')
 const path = require('path')
 
-let serverInstance: any // Referenz, um den Server später ggf. zu schließen
+let serverInstance: any
 
 function createWindow(): void {
   // Express-Server erstellen
   const expressApp = express()
-
-  // Gebaute statische Dateien (z. B. aus dem dist-Ordner) bereitstellen
   expressApp.use(express.static(path.join(__dirname, '../../dist')))
 
-  // Für Single-Page-Apps: Bei allen Routen index.html zurückgeben
   expressApp.get('*', (_req, res) => {
     res.sendFile(path.join(__dirname, '../../dist/index.html'))
   })
 
-  // Server auf Port 5173 starten
   serverInstance = expressApp.listen(5173, () => {
     console.log('Express-Server läuft auf http://localhost:5173')
   })
 
-  // Erstelle das Browser-Fenster
+  // Browser-Fenster
   const mainWindow = new BrowserWindow({
     icon: icon,
     width: 800,
@@ -44,7 +40,6 @@ function createWindow(): void {
     }
   })
 
-  // Laden der Seite vom lokalen Server (http://localhost:5173)
   mainWindow.loadURL('http://localhost:5173')
 
   mainWindow.on('ready-to-show', () => {
@@ -85,12 +80,9 @@ function createWindow(): void {
   })
 }
 
-// Diese Funktion wird aufgerufen, wenn Electron bereit ist
 app.whenReady().then(() => {
-  // Setze die App-UserModelId für Windows
-  electronApp.setAppUserModelId('com.electron')
+  electronApp.setAppUserModelId('io.github.nikol.flopodoro')
 
-  // Standardmäßig F12 für die Entwicklertools öffnen oder CommandOrControl + R ignorieren
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
   })
@@ -98,12 +90,10 @@ app.whenReady().then(() => {
   createWindow()
 
   app.on('activate', function () {
-    // Auf macOS ist es üblich, ein Fenster neu zu erstellen, wenn das Dock-Symbol angeklickt wird und keine Fenster offen sind
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 })
 
-// Beende die App, wenn alle Fenster geschlossen sind, außer auf macOS
 app.on('window-all-closed', () => {
   if (serverInstance) {
     serverInstance.close()

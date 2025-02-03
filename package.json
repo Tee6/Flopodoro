@@ -12,7 +12,6 @@
     "typecheck:web": "vue-tsc --noEmit -p tsconfig.web.json --composite false",
     "typecheck": "npm run typecheck:node && npm run typecheck:web",
     "start": "electron-vite preview",
-    "startex": "ts-node src/main/server.ts",
     "dev": "electron-vite dev",
     "build": "npm run typecheck && electron-vite build",
     "prebuild": "electron-vite build",
@@ -55,7 +54,7 @@
     "vue-tsc": "^1.8.27"
   },
   "build": {
-    "appId": "com.yourapp.name",
+    "appId": "io.github.nikol.flopodoro",
     "files": [
       "dist/**/*",
       "out/**/*",
