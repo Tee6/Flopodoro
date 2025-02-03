@@ -31,6 +31,7 @@
             <option value="3">Purple theme</option>
             <option value="4">Blue theme</option>
             <option value="5">White theme</option>
+            <option value="6">Dark Mode</option>
             <!-- Add more options as needed -->
           </select>
         </div>

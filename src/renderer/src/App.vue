@@ -64,13 +64,23 @@ const themes = [
     timerTextColor: 'rgba(12, 4, 58, 1)',
     menuColor: '#4d8eb6'
   },
-  {name: 'whiteTheme',
+  {
+    name: 'whiteTheme',
     bgColor: '#ffffff',
     accentColor: '#000000',
     textColor: '#ffffff',
     timerColor: 'rgba(12, 4, 58, 1)',
     timerTextColor: 'rgba(12, 4, 58, 1)',
     menuColor: '#000000'
+  },
+  {
+    name: 'DarkTheme',
+    bgColor: '#121212',
+    accentColor: '#3e3e3e',
+    textColor: '#FFFFFF',
+    timerColor: '#FFFFFF',
+    timerTextColor: '#FFFFFF',
+    menuColor: '#3e3e3e'
   }
 ]
 
