@@ -15,10 +15,10 @@ let serverInstance: any
 function createWindow(): void {
   // Express-Server erstellen
   const expressApp = express()
-  expressApp.use(express.static(path.join(__dirname, '../../dist')))
+  expressApp.use(express.static(path.join(__dirname, '../../out/renderer')))
 
   expressApp.get('*', (_req, res) => {
-    res.sendFile(path.join(__dirname, '../../dist/index.html'))
+    res.sendFile(path.join(__dirname, '../../out/renderer/index.html'))
   })
 
   serverInstance = expressApp.listen(5173, () => {

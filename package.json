@@ -15,6 +15,7 @@
     "dev": "electron-vite dev",
     "build": "npm run typecheck && electron-vite build",
     "prebuild": "electron-vite build",
+    "clean": "rimraf dist",
     "postinstall": "electron-builder install-app-deps",
     "build:unpack": "npm run build && electron-builder --dir",
     "build:win": "npm run build && electron-builder --win",
@@ -46,6 +47,7 @@
     "eslint": "^8.56.0",
     "eslint-plugin-vue": "^9.20.1",
     "prettier": "^3.2.4",
+    "rimraf": "^6.0.1",
     "sass": "^1.77.4",
     "ts-node": "^10.9.2",
     "typescript": "^5.3.3",
@@ -58,7 +60,10 @@
     "files": [
       "dist/**/*",
       "out/**/*",
-      "out/main/server.js"
+      "out/main/server.js",
+      "!node_modules/devDependencies/**",
+      "!**/*.map",
+      "!src/**"
     ],
     "win": {
       "target": "nsis"

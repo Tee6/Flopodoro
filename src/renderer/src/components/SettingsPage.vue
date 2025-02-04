@@ -60,8 +60,8 @@ import { useMainStore } from '../stores/mainStore'
 const MainStore = useMainStore()
 var version = __APP_VERSION__
 
-const PomodoroWorkTime = ref(MainStore.PomodoroTime[1])
-const PomodoroPauseTime = ref(MainStore.PomodoroPauseTime[1])
+var PomodoroWorkTime = ref(MainStore.PomodoroTime[1])
+var PomodoroPauseTime = ref(MainStore.PomodoroPauseTime[1])
 const store = useMainStore()
 const colorTheme = ref(store.selectedTheme)
 
