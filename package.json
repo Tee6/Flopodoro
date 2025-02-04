@@ -57,16 +57,27 @@
   },
   "build": {
     "appId": "io.github.nikol.flopodoro",
-    "files": [
-      "dist/**/*",
-      "out/**/*",
-      "out/main/server.js",
-      "!node_modules/devDependencies/**",
-      "!**/*.map",
-      "!src/**"
-    ],
+"files": [
+  "dist/**/*",
+  "out/**/*",
+  "out/main/server.js",
+  "!node_modules/devDependencies/**",
+  "!node_modules/.cache/**",
+  "!node_modules/**/*.md",
+  "!node_modules/**/*.map",
+  "!node_modules/**/test/**",
+  "!node_modules/**/example/**",
+  "!node_modules/**/docs/**",
+  "!node_modules/**/benchmark/**",
+  "!src/**",
+  "!*.map"
+],
     "win": {
       "target": "nsis"
-    }
+    },
+    "asar": true,
+"compression": "maximum",
+"buildDependenciesFromSource": false
+
   }
 }

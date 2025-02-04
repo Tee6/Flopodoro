@@ -11,8 +11,8 @@
       <div class="label"></div>
     </div>
     <div class="track-info" :style="{ color: props.textColor }">
-      <h1 class="track-name">{{ MainStore.TrackName }}</h1>
-      <h3 class="track-artist">{{ MainStore.ArtistName }}</h3>
+      <h1 class="track-name" :style="{ color: props.textColor }">{{ MainStore.TrackName }}</h1>
+      <h3 class="track-artist" :style="{ color: props.textColor }">{{ MainStore.ArtistName }}</h3>
     </div>
   </div>
 </template>
@@ -31,10 +31,11 @@ const rotation = ref(0);
 const transitionStyle = ref('none');
 let animationFrame: number | null = null;
 
+// Funktion zum Starten der Drehung
 const startSpinning = () => {
-  transitionStyle.value = 'none';
+  transitionStyle.value = 'none'; // Keine Transition während des Drehens
   const updateRotation = () => {
-    rotation.value = (rotation.value + 2) % 360;
+    rotation.value = (rotation.value + 2) % 360; // Dreht sich kontinuierlich weiter
     if (MainStore.spinning) {
       animationFrame = requestAnimationFrame(updateRotation);
     }
@@ -42,16 +43,19 @@ const startSpinning = () => {
   updateRotation();
 };
 
+// Funktion für sanftes Zurückdrehen auf 0° mit vollständiger Drehung
 const stopSpinning = () => {
   if (animationFrame) cancelAnimationFrame(animationFrame);
 
+  // Berechne die verbleibende Drehung bis zur nächsten vollen Umdrehung (360°)
   const currentRotation = rotation.value % 360;
-  const difference = currentRotation > 180 ? currentRotation - 360 : currentRotation;
+  const remainingRotation = 360 - currentRotation;
 
-  transitionStyle.value = 'transform 2s ease-out';
-  rotation.value -= difference; 
+  transitionStyle.value = `transform ${remainingRotation / 180}s ease-out`; // Geschwindigkeit abhängig von verbleibender Drehung
+  rotation.value += remainingRotation; // Dreht weiter bis 360°
 };
 
+// Beobachtet Änderungen an spinning
 watch(() => MainStore.spinning, (newVal) => {
   if (newVal) {
     startSpinning();
