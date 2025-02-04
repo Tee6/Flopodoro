@@ -1,31 +1,72 @@
 <template>
   <div class="record-container">
-    <div class="record" :style="{ backgroundImage: `url(${albumCover})`, animationPlayState: MainStore.spinning ? 'running' : 'paused' }">
+    <div 
+      class="record" 
+      :style="{
+        backgroundImage: `url(${albumCover})`,
+        transform: `rotate(${rotation}deg)`,
+        transition: transitionStyle
+      }"
+    >
       <div class="label"></div>
     </div>
     <div class="track-info" :style="{ color: props.textColor }">
-      <h1 class="track-name" :style="{ color: props.textColor }">{{ MainStore.TrackName }}</h1>
-      <h3 class="track-artist" :style="{ color: props.textColor }">{{ MainStore.ArtistName }}</h3>
+      <h1 class="track-name">{{ MainStore.TrackName }}</h1>
+      <h3 class="track-artist">{{ MainStore.ArtistName }}</h3>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { useMainStore } from '../stores/mainStore';
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref, watch } from 'vue';
 
 const MainStore = useMainStore();
 const props = defineProps<{
-  albumCover: string
-  textColor: string
-}>()
+  albumCover: string;
+  textColor: string;
+}>();
+
+const rotation = ref(0);
+const transitionStyle = ref('none');
+let animationFrame: number | null = null;
+
+const startSpinning = () => {
+  transitionStyle.value = 'none';
+  const updateRotation = () => {
+    rotation.value = (rotation.value + 2) % 360;
+    if (MainStore.spinning) {
+      animationFrame = requestAnimationFrame(updateRotation);
+    }
+  };
+  updateRotation();
+};
+
+const stopSpinning = () => {
+  if (animationFrame) cancelAnimationFrame(animationFrame);
+
+  const currentRotation = rotation.value % 360;
+  const difference = currentRotation > 180 ? currentRotation - 360 : currentRotation;
+
+  transitionStyle.value = 'transform 2s ease-out';
+  rotation.value -= difference; 
+};
+
+watch(() => MainStore.spinning, (newVal) => {
+  if (newVal) {
+    startSpinning();
+  } else {
+    stopSpinning();
+  }
+}, { immediate: true });
 </script>
 
 <style scoped>
-.track-info{
+.track-info {
   margin-left: 20px;
 }
-.track-artist{
+
+.track-artist {
   color: rgba(12, 4, 58, 1);
   text-align: left;
   font-family: 'Roboto', sans-serif;
@@ -58,8 +99,6 @@ const props = defineProps<{
   background-size: cover;
   background-position: center;
   border: 5px solid #333;
-  animation: spin 3s linear infinite;
-  animation-play-state: running;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -72,14 +111,5 @@ const props = defineProps<{
   background-color: white;
   border-radius: 50%;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
 }
 </style>

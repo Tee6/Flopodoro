@@ -1,6 +1,6 @@
 {
   "name": "flopodoro",
-  "version": "2.0.0",
+  "version": "2.5.0",
   "description": "Pomodoro Timer",
   "main": "./out/main/index.js",
   "author": "Niko Leimegger",

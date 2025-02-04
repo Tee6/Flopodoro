@@ -46,17 +46,22 @@
   <span v-else>Log in with Spotify</span>
 </button>
   </div>
+  <div>
+    <p class="version-p">Version: {{ version }}</p>
+  </div>
     </div>
   </div>
+  
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { useMainStore } from '../stores/mainStore'
 const MainStore = useMainStore()
+var version = __APP_VERSION__
 
-const PomodoroWorkTime = ref(25)
-const PomodoroPauseTime = ref(5)
+const PomodoroWorkTime = ref(MainStore.PomodoroTime[1])
+const PomodoroPauseTime = ref(MainStore.PomodoroPauseTime[1])
 const store = useMainStore()
 const colorTheme = ref(store.selectedTheme)
 
@@ -72,7 +77,7 @@ function saveSettings() {
   localStorage.setItem('pomodoroSettings', JSON.stringify(settings))
 
   // Update store values
-  store.FlopodoroPause = [0, PomodoroPauseTime.value, 0]
+  store.PomodoroPauseTime = [0, PomodoroPauseTime.value, 0]
   store.PomodoroTime = [0, PomodoroWorkTime.value, 0]
   store.selectedTheme = parseInt(colorTheme.value, 10)
 
@@ -91,6 +96,10 @@ function handleOutsideClick(event) {
 </script>
 
 <style scoped>
+.version-p{
+  color:#555;
+  display: flex;
+}
 .spotify-button{
   background-color: #1CB950;
   color: #ffffff;

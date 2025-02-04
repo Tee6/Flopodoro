@@ -47,6 +47,7 @@ export const useMainStore = defineStore('main', {
       if (this.isFlopodoroActive) {
         clearInterval(this.Flopodoro)
         this.isFlopodoroActive = false
+        console.log("Flopodoro is active", this.isFlopodoroActive)
         this.FlopodoroPause()
         return
       } else {
