@@ -43,19 +43,16 @@ const startSpinning = () => {
   updateRotation();
 };
 
-// Funktion für sanftes Zurückdrehen auf 0° mit vollständiger Drehung
 const stopSpinning = () => {
   if (animationFrame) cancelAnimationFrame(animationFrame);
 
-  // Berechne die verbleibende Drehung bis zur nächsten vollen Umdrehung (360°)
   const currentRotation = rotation.value % 360;
   const remainingRotation = 360 - currentRotation;
 
-  transitionStyle.value = `transform ${remainingRotation / 180}s ease-out`; // Geschwindigkeit abhängig von verbleibender Drehung
-  rotation.value += remainingRotation; // Dreht weiter bis 360°
+  transitionStyle.value = `transform ${remainingRotation / 180}s ease-out`;
+  rotation.value += remainingRotation; 
 };
 
-// Beobachtet Änderungen an spinning
 watch(() => MainStore.spinning, (newVal) => {
   if (newVal) {
     startSpinning();
