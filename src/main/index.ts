@@ -1,4 +1,4 @@
-import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { app, shell, BrowserWindow, ipcMain, powerSaveBlocker } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer } from '@electron-toolkit/utils'
 import icon from '../../resources/icon.png?asset'
@@ -11,6 +11,7 @@ const express = require('express')
 const path = require('path')
 
 let serverInstance: any
+let wakeLockId: number | null = null // Speichert die ID für das Wake Lock
 
 function createWindow(): void {
   // Express-Server erstellen
@@ -45,6 +46,21 @@ function createWindow(): void {
   mainWindow.on('ready-to-show', () => {
     mainWindow.webContents.setZoomFactor(0.63)
     mainWindow.show()
+
+    // Wake Lock aktivieren, wenn das Fenster angezeigt wird
+    if (!wakeLockId) {
+      wakeLockId = powerSaveBlocker.start('prevent-display-sleep')
+      console.log('Wake Lock aktiviert:', wakeLockId)
+    }
+  })
+
+  mainWindow.on('close', () => {
+    // Wake Lock deaktivieren, wenn Fenster geschlossen wird
+    if (wakeLockId !== null) {
+      powerSaveBlocker.stop(wakeLockId)
+      console.log('Wake Lock deaktiviert')
+      wakeLockId = null
+    }
   })
 
   ipcMain.on('minimize', () => {
@@ -98,6 +114,13 @@ app.on('window-all-closed', () => {
   if (serverInstance) {
     serverInstance.close()
   }
+
+  // Wake Lock beim Beenden deaktivieren
+  if (wakeLockId !== null) {
+    powerSaveBlocker.stop(wakeLockId)
+    console.log('Wake Lock beim Beenden deaktiviert')
+  }
+
   if (process.platform !== 'darwin') {
     app.quit()
   }
