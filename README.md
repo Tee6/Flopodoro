@@ -28,14 +28,20 @@ No more unnecessary interruptions—Flomodoro lets you stay in your flow state f
   
 - **Customizable Color Schemes**: Personalize your timer with multiple color options to match your aesthetic.
 
-- **Music Display**: Connect your Spotify account to have a nice display of your currently playing Song.
+- **Music Display**: Connect your Spotify account to have a nice display of your currently playing Song. To pause the vinyl animation press `Ctrl + P`
 
 ---
 
 With **Flopodoro**, you control your breaks, stay focused longer, and maximize your productivity without breaking your concentration.
 
 ---
+## Shortcuts summary
 
+`Ctrl + H` - Hide HUD
+
+`Ctrl + P` - Pause Music animation
+
+---
 ## Installation
 
 Download the newest ".exe" File in the Release Tab on the right of this Github Page and install the App.
